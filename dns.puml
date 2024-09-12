@@ -1,0 +1,17 @@
+@startuml
+actor User as user
+participant "Root DNS Server" as root
+participant "TLD DNS Server" as tld
+participant "Authoritative DNS Server" as auth
+
+user -> root : Query "www.example.com"
+root -> user : Referral to TLD DNS Server (".com")
+
+user -> tld : Query "www.example.com"
+tld -> user : Referral to Authoritative DNS Srver
+
+user -> auth : Query "www.example.com"
+auth -> user : Response with IP address "93.184.215.14"
+
+note right of user: User successfully receives the IP
+@enduml
